@@ -28,7 +28,7 @@ jobs:
           environment:
             BUNDLE_JOBS: 4
             BUNDLE_RETRY: 3
-      - run: scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
+      - run: carthage bootstrap
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
           paths:
