@@ -8,6 +8,7 @@ jobs:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       LANG: en_US.UTF-8
+      BUNDLE_PATH: vendor/bundle
     macos:
       xcode: '9.2.0'
     steps:
@@ -22,10 +23,11 @@ jobs:
       - run: brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
       - run: brew install swiftlint
       - run:
-          name: Install gem dependencies
-          command: bundle install
+          name: Bundle install
+          command: bundle check || bundle install
           environment:
-            BUNDLE_PATH: vendor/bundle
+            BUNDLE_JOBS: 4
+            BUNDLE_RETRY: 3
       - run: scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
