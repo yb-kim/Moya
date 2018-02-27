@@ -18,9 +18,9 @@ jobs:
         command: echo -e "export LANG=en_US.UTF-8" >> $BASH_ENV
       - restore_cache:
           keys:
-          - v1-dep-{{ .Branch }}-
-          - v1-dep-master-
-          - v1-dep-
+            - v1-dep-{{ .Branch }}-
+            - v1-dep-master-
+            - v1-dep-
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
       - run: brew update ; brew update
       - run: brew install swiftlint
@@ -29,14 +29,14 @@ jobs:
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
           paths:
-          - vendor/bundle
-          - ~/.ivy2
-          - ~/.bundle
-          - Carthage
+            - vendor/bundle
+            - ~/.ivy2
+            - ~/.bundle
+            - Carthage
       - run: 
-        test: rake test 
-        carthage: rake test:carthage 
-        build_example: rake build_example
+          test: rake test 
+          carthage: rake test:carthage 
+          build_example: rake build_example
       - run: bundle exec danger
       - run: bash <(curl -s https://codecov.io/bash) -J Moya
       - run: find $HOME/Library/Developer/Xcode/DerivedData -name '*.xcactivitylog' -exec cp {} $CIRCLE_ARTIFACTS/xcactivitylog \; || true
