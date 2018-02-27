@@ -30,10 +30,7 @@ jobs:
             - ~/.ivy2
             - ~/.bundle
             - Carthage
-      - run: 
-          test: rake test 
-          carthage: rake test:carthage 
-          build_example: rake build_example
+      - run: rake test && rake test:carthage && rake build_example
       - run: bundle exec danger
       - run: bash <(curl -s https://codecov.io/bash) -J Moya
       - run: find $HOME/Library/Developer/Xcode/DerivedData -name '*.xcactivitylog' -exec cp {} $CIRCLE_ARTIFACTS/xcactivitylog \; || true
