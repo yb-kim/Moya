@@ -22,10 +22,10 @@ jobs:
       - run: brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
       - run: brew install swiftlint
       - run:
-        name: Install gem dependencies
-        command: bundle install
-        environment:
-          BUNDLE_PATH: vendor/bundle
+          name: Install gem dependencies
+          command: bundle install
+          environment:
+            BUNDLE_PATH: vendor/bundle
       - run: scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
