@@ -22,10 +22,10 @@ jobs:
             - v1-dep-master-
             - v1-dep-
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
-      - run: brew update ; brew update
+      - run: brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
       - run: brew install swiftlint
       - run: bundle install
-      - run: scripts/bootstrap-if-needed.sh
+      - run: scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
           paths:
