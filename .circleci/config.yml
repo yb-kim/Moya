@@ -19,12 +19,15 @@ jobs:
             - v1-dep-{{ .Branch }}-
             - v1-dep-master-
             - v1-dep-
+      - run:
+          name: Set Ruby Version
+          command:  echo "ruby-2.4" > ~/.ruby-version
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
       - run: brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
       - run: brew install swiftlint
       - run:
           name: Bundle install
-          command: bundle check || bundle install
+          command: bundle check || bundle install --path vendor/bundle
           environment:
             BUNDLE_JOBS: 4
             BUNDLE_RETRY: 3
